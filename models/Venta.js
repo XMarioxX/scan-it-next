@@ -5,7 +5,21 @@ const ventaSchema = new mongoose.Schema({
     numero_ticket: { type: String, required: true },
     fecha_venta: { type: Date, required: true },
     vendedor_id: { type: String, required: true },
-    items: { type: Array, required: true },
+    items: [{
+        variante_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Variante',
+            required: true
+        },
+        cantidad: {
+            type: Number,
+            required: true
+        },
+        precio: {
+            type: Number,
+            required: true
+        }
+    }],
     subtotal: { type: Number, required: true },
     descuento: { type: Number, required: true },
     total: { type: Number, required: true },
@@ -13,6 +27,6 @@ const ventaSchema = new mongoose.Schema({
     cliente: { type: Object, required: true }
 });
 
-const Venta = mongoose.model('Venta', ventaSchema);
+const Venta = mongoose.models.Venta||mongoose.model('Venta', ventaSchema);
 
 module.exports = Venta;
